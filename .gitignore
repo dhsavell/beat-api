@@ -103,6 +103,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-### IDE Files
+# PyCharm project files
 
 .idea/
+
+# Files created by server
+
+*.mp3
+beat-api-tmp/

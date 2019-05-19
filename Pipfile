@@ -8,6 +8,10 @@ verify_ssl = true
 [packages]
 quart = "*"
 beat-machine = {git = "https://github.com/dhsavell/beat-machine.git"}
+pydub = "*"
+jsonschema = "*"
+celery = "*"
+redis = "*"
 
 [requires]
 python_version = "3.7"

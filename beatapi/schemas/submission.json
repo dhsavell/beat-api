@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Beat Machine API: Song Submission",
+  "type": "object",
+  "required": [
+    "bpm",
+    "effects"
+  ],
+  "properties": {
+    "bpm": {
+      "type": "integer",
+      "minimum": 10
+    },
+    "effects": {
+      "type": "array",
+      "title": "Effects",
+      "minItems": 1,
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": {
+        "$comment": "See https://github.com/dhsavell/beat-machine/blob/e825e38/EFFECTS.md",
+        "oneOf": [
+          {
+            "$comment": "Effects with no parameters",
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "enum": [
+                  "randomize"
+                ]
+              }
+            }
+          },
+          {
+            "$comment": "Effects with 1 period parameter",
+            "type": "object",
+            "required": ["type", "period"],
+            "properties": {
+              "type": {
+                "enum": [
+                  "cut",
+                  "remove",
+                  "reverse",
+                  "silence"
+                ]
+              },
+              "period": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          {
+            "$comment": "Repeat effect",
+            "type": "object",
+            "required": ["type", "period", "times"],
+            "properties": {
+              "type": {
+                "const": "repeat"
+              },
+              "period": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "times": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          {
+            "$comment": "Swap effect",
+            "type": "object",
+            "required": ["type", "x_period", "y_period"],
+            "properties": {
+              "type": {
+                "const": "swap"
+              },
+              "x_period": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "y_period": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
