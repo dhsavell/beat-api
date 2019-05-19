@@ -1,1 +1,1 @@
-web: celery worker -A beatapi.celery & hypercorn beatapi:app
+web: celery worker -A beatapi.celery & hypercorn beatapi:app & wait -n
