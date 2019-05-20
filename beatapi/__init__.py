@@ -5,6 +5,10 @@ from quart import Quart
 
 app = Quart(__name__)
 app.config['PROCESSING_DIR'] = './beat-api-tmp'
+
+if not os.path.isdir(app.config['PROCESSING_DIR']):
+    os.mkdir(app.config['PROCESSING_DIR'])
+
 app.config['RESULT_LIFETIME'] = 8 * 60
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 app.config['CELERY_BROKER_URL'] = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
