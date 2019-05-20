@@ -12,6 +12,7 @@ pydub = "*"
 jsonschema = "*"
 celery = "*"
 redis = "*"
+flask-limiter = "*"
 
 [requires]
 python_version = "3.7"

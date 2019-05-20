@@ -6,7 +6,7 @@ from http import HTTPStatus
 import jsonschema
 from quart import Blueprint, request, jsonify, Response, send_from_directory
 
-from beatapi import app
+from beatapi import app, limiter
 from beatapi.tasks import processing_task, get_input_file_path
 
 api_v0 = Blueprint('api_v0', __name__, url_prefix='/api/v0')
@@ -27,6 +27,7 @@ def is_file_valid(filename: str) -> bool:
 
 
 @api_v0.route(path='/submit', methods=['POST'])
+@limiter.limit('1 per minute')
 async def submit():
     form = await request.form
 
@@ -78,6 +79,7 @@ async def submit():
 
 
 @api_v0.route(path='/status/<task_id>', methods=['GET'])
+@limiter.exempt
 async def status(task_id: str):
     task = processing_task.AsyncResult(task_id)
 
@@ -102,5 +104,6 @@ async def status(task_id: str):
 
 
 @api_v0.route(path='/result/<file_id>', methods=['GET'])
+@limiter.exempt
 async def result(file_id: str):
     return await send_from_directory(app.config['PROCESSING_DIR'], file_id + '.mp3')
