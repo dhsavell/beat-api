@@ -22,4 +22,5 @@ limiter = Limiter(app, key_func=get_remote_address, default_limits=['1 per minut
 celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
 
 from beatapi.v0 import api_v0
+
 app.register_blueprint(api_v0)

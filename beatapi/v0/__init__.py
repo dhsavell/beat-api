@@ -5,11 +5,12 @@ from http import HTTPStatus
 
 import jsonschema
 from quart import Blueprint, request, jsonify, Response, send_from_directory
+from quart_cors import cors
 
 from beatapi import app, limiter
 from beatapi.tasks import processing_task, get_input_file_path
 
-api_v0 = Blueprint('api_v0', __name__, url_prefix='/api/v0')
+api_v0 = cors(Blueprint('api_v0', __name__, url_prefix='/api/v0'))
 
 with open(os.path.join(app.root_path, 'schemas/submission.json'), 'r') as fp:
     submission_schema = json.load(fp)
@@ -27,7 +28,7 @@ def is_file_valid(filename: str) -> bool:
 
 
 @api_v0.route(path='/submit', methods=['POST'])
-@limiter.limit('1 per minute')
+@limiter.limit('4 per minute')
 async def submit():
     form = await request.form
 
