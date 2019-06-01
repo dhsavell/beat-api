@@ -30,7 +30,7 @@ def processing_task(self: Task, file_id: str, data: dict):
 
         for i, effect in enumerate(effects):
             self.update_state(state='PROGRESS', meta={'current_effect': i})
-            beats = effect(beats)
+            beats = list(effect(beats))
 
         result = sum(beats)
         result.export(result_path)
