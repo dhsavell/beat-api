@@ -6,8 +6,9 @@ from celery import Celery
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from quart import Quart
+from quart_cors import cors
 
-app = Quart(__name__)
+app = cors(Quart(__name__))
 app.config['PROCESSING_DIR'] = './beat-api-tmp'
 
 if not os.path.isdir(app.config['PROCESSING_DIR']):

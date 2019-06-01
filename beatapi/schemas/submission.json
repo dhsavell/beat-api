@@ -9,7 +9,8 @@
   "properties": {
     "bpm": {
       "type": "integer",
-      "minimum": 10
+      "minimum": 10,
+      "maximum": 300
     },
     "effects": {
       "type": "array",

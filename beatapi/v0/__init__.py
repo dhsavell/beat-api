@@ -5,12 +5,11 @@ from http import HTTPStatus
 
 import jsonschema
 from quart import Blueprint, request, jsonify, Response, send_from_directory
-from quart_cors import cors
 
 from beatapi import app, limiter
 from beatapi.tasks import processing_task, get_input_file_path
 
-api_v0 = cors(Blueprint('api_v0', __name__, url_prefix='/api/v0'))
+api_v0 = Blueprint('api_v0', __name__, url_prefix='/api/v0')
 
 with open(os.path.join(app.root_path, 'schemas/submission.json'), 'r') as fp:
     submission_schema = json.load(fp)
@@ -90,9 +89,10 @@ async def status(task_id: str):
             'current_effect': task.info.get('current_effect', 0)
         }), HTTPStatus.OK
     elif task.state == 'SUCCESS':
-        return Response(response='', status=HTTPStatus.SEE_OTHER, headers={
-            'Location': f'{api_v0.url_prefix}/result/{task.get()}'
-        })
+        return jsonify({
+            'state': 'SUCCESS',
+            'location': f'{api_v0.url_prefix}/result/{task.get()}'
+        }), HTTPStatus.OK
     elif task.state == ' FAILURE':
         return jsonify({
             'state': 'FAILURE',
