@@ -1,6 +1,6 @@
 import os
 
-from beatmachine.processor import beats_of
+from beatmachine.processor import beats_of, remove_leading_silence
 from beatmachine.registry import load_all_effects
 from beatmachine.effects import *
 from celery import Task
@@ -25,7 +25,7 @@ def processing_task(self: Task, file_id: str, data: dict):
     try:
         effects = load_all_effects(data)
         bpm = int(data['bpm'])
-        audio = AudioSegment.from_mp3(input_path)
+        audio = remove_leading_silence(AudioSegment.from_mp3(input_path))
         beats = list(beats_of(audio, bpm))
 
         for i, effect in enumerate(effects):
