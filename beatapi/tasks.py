@@ -1,10 +1,9 @@
 import os
 
-from beatmachine.processor import beats_of, remove_leading_silence
-from beatmachine.registry import load_all_effects
+from beatmachine.effect_loader import load_all_effects
+from beatmachine.processor import load_as_beats
 from beatmachine.effects import *
 from celery import Task
-from pydub import AudioSegment
 
 from beatapi import celery, app
 
@@ -24,12 +23,12 @@ def processing_task(self: Task, file_id: str, data: dict):
 
     try:
         effects = load_all_effects(data)
-        bpm = int(data['bpm'])
-        audio = remove_leading_silence(AudioSegment.from_mp3(input_path))
-        beats = list(beats_of(audio, bpm))
+
+        self.update_state(state='PROGRESS', meta={'stage': 'loading_beats'})
+        beats = load_as_beats(input_path)
 
         for i, effect in enumerate(effects):
-            self.update_state(state='PROGRESS', meta={'current_effect': i})
+            self.update_state(state='PROGRESS', meta={'stage': 'applying_effects', 'current_effect': i})
             beats = list(effect(beats))
 
         result = sum(beats)

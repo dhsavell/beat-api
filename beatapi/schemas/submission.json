@@ -3,15 +3,9 @@
   "title": "Beat Machine API: Song Submission",
   "type": "object",
   "required": [
-    "bpm",
     "effects"
   ],
   "properties": {
-    "bpm": {
-      "type": "integer",
-      "minimum": 10,
-      "maximum": 300
-    },
     "effects": {
       "type": "array",
       "title": "Effects",
