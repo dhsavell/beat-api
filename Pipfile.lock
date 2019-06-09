@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b75302b0f0732579424e898b8b6deae32004278fe4e33b5d184125a299caa1e6"
+            "sha256": "e88a76ee17049403eaf350fe9b7ebcf5eea39ef9dff1ae65fab083547d51d388"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -37,7 +37,7 @@
             ],
             "version": "==19.1.0"
         },
-        "beat-machine": {
+        "beatmachine": {
             "git": "https://github.com/dhsavell/beat-machine.git",
             "ref": "f0c721edacc8a75c20df41e1c6c983f3daa16901"
         },

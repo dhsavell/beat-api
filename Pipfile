@@ -12,13 +12,12 @@ celery = "*"
 redis = "*"
 flask-limiter = "*"
 quart-cors = "*"
-
 # The Beat Machine library isn't on PyPI yet, so we have to list all of its dependencies here.
-beat-machine = {git = "https://github.com/dhsavell/beat-machine.git"}
 cython = "*"
 numpy = "*"
 madmom = "*"
 pydub = "*"
+beatmachine = {git = "https://github.com/dhsavell/beat-machine.git",ref = "v1.1.0"}
 
 [requires]
 python_version = "3.7"
