@@ -25,7 +25,7 @@ def processing_task(self: Task, file_id: str, data: dict):
         effects = load_all_effects(data)
 
         self.update_state(state='PROGRESS', meta={'stage': 'loading_beats'})
-        beats = load_as_beats(input_path)
+        beats = list(load_as_beats(input_path))
 
         for i, effect in enumerate(effects):
             self.update_state(state='PROGRESS', meta={'stage': 'applying_effects', 'current_effect': i})
